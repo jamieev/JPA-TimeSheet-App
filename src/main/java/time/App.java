@@ -80,8 +80,6 @@ public class App {
 			log.info(entryRepo.findByEmployee(eimaj).toString());
 			
 			log.info("--------------------------");
-			Employee jamie2 = new Employee("Joe", "Bloggs", "gt909992");
-			empRepo.save(jamie2);
 
 			List<DailyEntry> entries = new ArrayList<DailyEntry>(5);
 			for(int i = 1; i< 6;i++) {
@@ -98,7 +96,7 @@ public class App {
 			timeSheetRepo.save(ts);
 			
 			log.info("--------------------------");
-			for(TimeSheet sheet: timeSheetRepo.findAll()) {
+			for(TimeSheet sheet: timeSheetRepo.findByEmployee(jamie)) {
 				log.info("TS: " + sheet.toString());
 			}
 			
