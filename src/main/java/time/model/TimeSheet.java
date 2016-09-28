@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import constants.TimeSheetStatus;
+import time.constants.TimeSheetStatus;
 
 @Entity
 public class TimeSheet {

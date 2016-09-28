@@ -1,4 +1,4 @@
-package constants;
+package time.constants;
 
 public enum TimeSheetStatus {
 

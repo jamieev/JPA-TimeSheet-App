@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import constants.TimeSheetStatus;
+import time.constants.TimeSheetStatus;
 
 public class TimeSheetTest {
 
