@@ -23,7 +23,7 @@ public class Employee {
 	private String lastName;
 	private String gtNumber;
 	
-	protected Employee() {}
+	public Employee() {}
 	
 	public Employee(String firstName, String lastName, String gtNumber) {
 		this.firstName = firstName;
@@ -60,6 +60,18 @@ public class Employee {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setGtNumber(String gtNumber) {
+		this.gtNumber = gtNumber;
 	}
 
 	@Override
