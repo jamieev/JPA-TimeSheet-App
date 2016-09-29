@@ -45,6 +45,22 @@ public class Employee {
 	public String getGtNumber() {
 		return gtNumber;
 	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	@Override
 	public String toString() {

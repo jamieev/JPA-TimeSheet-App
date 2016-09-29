@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(uniqueConstraints={
 		@UniqueConstraint(columnNames={"projectName"})})
@@ -24,6 +26,7 @@ public class Project {
 	private String projectName;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JsonManagedReference
 	List<ProjectTask> tasks = new ArrayList<ProjectTask>();
 	
 	public Project() {}

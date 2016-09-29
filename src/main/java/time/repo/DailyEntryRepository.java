@@ -13,4 +13,7 @@ public interface DailyEntryRepository extends CrudRepository<DailyEntry, Long>{
 	@Query("select D from DailyEntry D where employee = ?1")
 	List<DailyEntry> findByEmployee(Employee employee);
 
+	@Query("select D from DailyEntry D where employee.id = ?1")
+	List<DailyEntry> findByEmployee(Long id);
+
 }

@@ -42,6 +42,22 @@ public class TimeSheet {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	List<DailyEntry> entries;
 
+	public Long getId() {
+		return id;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public Date getStartdate() {
+		return startdate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
 	public TimeSheet(Employee employee, Date startdate, Date endDate) {
 		super();
 		this.employee = employee;

@@ -45,6 +45,26 @@ public class DailyEntry {
 		return value;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public ProjectTask getTask() {
+		return task;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
 	@Override
 	public String toString() {
 		return "DailyEntry [id=" + id + ", date=" + date + ", project=" + project.getProjectName() + ", task=" + task.getTaskName() + ", employee="

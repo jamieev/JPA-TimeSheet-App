@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class ProjectTask {
 
@@ -14,6 +16,7 @@ public class ProjectTask {
 	private String taskName;
 	
 	@ManyToOne
+	@JsonBackReference
 	private Project project;
 	
 	public ProjectTask() {}
