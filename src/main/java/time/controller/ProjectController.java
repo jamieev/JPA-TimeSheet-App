@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import time.Utils;
@@ -34,6 +35,12 @@ public class ProjectController {
 	public Project getProject(@PathVariable(name="id") Long id) {
 		log.info("getting Project id : " + id);
 		return projectRepo.findOne(id);
+	}
+	
+	@RequestMapping(value="/projects/search", method=RequestMethod.GET)
+	public Project findByName(@RequestParam(name="name") String name) {
+		log.info("getting Project by name : " + name);
+		return projectRepo.findOneByProjectName(name);
 	}
 	
 	@RequestMapping(value="/projects")

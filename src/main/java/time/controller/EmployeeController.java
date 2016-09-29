@@ -58,7 +58,7 @@ public class EmployeeController {
 		return employeeRepo.findOne(id);
 	}
 	
-	@RequestMapping(value="/employees/{id}/addToProject/{projectId}", method=RequestMethod.POST)
+	@RequestMapping(value="/employees/{id}/addToProject/{projectId}", method=RequestMethod.PUT)
 	public void addToProject(@PathVariable(name="id")Long id, @PathVariable(name="projectId") Long projectId) 
 	throws CustomerNotFoundException, ProjectNotFoundException{
 		log.info("adding employee " +  id + " to project " + projectId);

@@ -49,6 +49,10 @@ public class Project {
 		return projectName;
 	}
 
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
 	public List<ProjectTask> getTasks() {
 		return Collections.unmodifiableList(this.tasks);
 	}
