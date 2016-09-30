@@ -52,6 +52,12 @@ public class EmployeeController {
 		return employeeRepo.save(employee);
 	}
 	
+	@RequestMapping(value="/employees", method=RequestMethod.DELETE)
+	public void deleteEmployee(Long id) {
+		log.info("Deleteing employee: " + id);
+		employeeRepo.delete(id);
+	}
+	
 	@RequestMapping(value="/employees/{id}", method=RequestMethod.GET)
 	public Employee getEmployee(@PathVariable(name="id") Long id) {
 		log.info("getting employee id : " + id);
