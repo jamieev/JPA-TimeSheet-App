@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Creating timesheet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Form</h1>
+    <form action="#" th:action="@{/createTimesheet}" th:object="${timesheet}" method="post">
+    	<p>Cheating! Filling the details in in the service layer!!</p>
+    	<input type="hidden" name="employeeId" th:value="${employeeId}"/>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+</html>

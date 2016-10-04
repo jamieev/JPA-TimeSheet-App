@@ -96,7 +96,7 @@ public class App {
 			timeSheetRepo.save(ts);
 			
 			log.info("--------------------------");
-			for(TimeSheet sheet: timeSheetRepo.findByEmployee(jamie)) {
+			for(TimeSheet sheet: timeSheetRepo.findByEmployee(jamie.getId())) {
 				log.info("TS: " + sheet.toString());
 			}
 			

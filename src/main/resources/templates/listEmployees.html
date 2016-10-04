@@ -11,6 +11,7 @@
         <th>Employee Name</th>
         <th>GT Number</th>
         <th></th>
+        <th></th>
       </tr>
       <tr th:each="e : ${employees}">
         <!-- td th:text="${#calendars.format(o.date,'dd/MMM/yyyy')}">13 jan 2011</td-->
@@ -20,6 +21,12 @@
         <td>
           <form action="#" th:action="@{'/deleteEmployee?id={id}'(id=${e.id})}" th:method="delete" >
 			  <button type="submit">Delete</button>
+		  </form>
+        </td>
+        <td>
+          <form action="#" th:action="@{'/createTimesheet'}" th:method="get" >
+          	  <input type="hidden" name="employeeId" th:value="${e.id}"/>
+			  <button type="submit">Create Timesheet</button>
 		  </form>
         </td>
       </tr>

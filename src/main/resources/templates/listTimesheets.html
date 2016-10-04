@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p>Add Projects: <a href="/createProject">here</a></p>
+    <table>
+      <tr>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Employee</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <tr th:each="ts : ${timesheets}">
+        <td th:text="${#calendars.format(ts.startdate,'dd/MMM/yyyy')}"></td>
+        <td th:text="${#calendars.format(ts.endDate,'dd/MMM/yyyy')}"></td>
+        <td th:text="${ts.employee.fullName}"></td>
+        <td th:text="${ts.status}"></td>
+        <!-- td th:text="${#aggregates.sum(o.orderLines.{purchasePrice * amount})}">23.32</td-->
+        <td>
+          <a href="submitTimesheet.html" th:href="@{/submitTimesheet(timesheetId=${ts.id})}">submit</a>
+          <a href="approveTimesheet.html" th:href="@{/approveTimesheet(timesheetId=${ts.id})}">approve</a>
+        </td>
+      </tr>
+    </table>
+</body>
+</html>

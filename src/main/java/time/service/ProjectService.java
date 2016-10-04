@@ -13,6 +13,7 @@ import time.exceptions.CustomerNotFoundException;
 import time.exceptions.ProjectNotFoundException;
 import time.model.Employee;
 import time.model.Project;
+import time.model.ProjectTask;
 import time.repo.EmployeeRepository;
 import time.repo.ProjectRepository;
 
@@ -20,6 +21,8 @@ import time.repo.ProjectRepository;
 public class ProjectService {
 	//NB this should be an interface and implementation ..
 	
+	private static final String DEFAULT_TASK = "Default Task";
+
 	private static final Logger log = LoggerFactory.getLogger(ProjectService.class);
 
 	@Resource
@@ -42,6 +45,10 @@ public class ProjectService {
 
 	public Project createProject(Project project) {
 		log.info("Creating Project: " + project);
+		if(project.getTasks().isEmpty()) {
+			ProjectTask task = new ProjectTask(DEFAULT_TASK);
+			project.addTask(task);
+		}
 		return projectRepo.save(project);
 	}
 	
