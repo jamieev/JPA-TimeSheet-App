@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import time.Utils;
 import time.model.Project;
-import time.repo.ProjectRepository;
+import time.service.ProjectService;
 
 @RestController
 public class ProjectController {
@@ -23,28 +23,28 @@ public class ProjectController {
 	private static final Logger log = LoggerFactory.getLogger(ProjectController.class);
 	
 	@Resource
-	ProjectRepository projectRepo;
+	ProjectService projectService;
 	
 	@RequestMapping(value="/projects", method=RequestMethod.POST)
 	public Project createProject(@RequestBody Project project) {
 		log.info("Creating Project: " + project);
-		return projectRepo.save(project);
+		return projectService.createProject(project);
 	}
 	
 	@RequestMapping(value="/projects/{id}", method=RequestMethod.GET)
 	public Project getProject(@PathVariable(name="id") Long id) {
 		log.info("getting Project id : " + id);
-		return projectRepo.findOne(id);
+		return projectService.getProject(id);
 	}
 	
 	@RequestMapping(value="/projects/search", method=RequestMethod.GET)
 	public Project findByName(@RequestParam(name="name") String name) {
 		log.info("getting Project by name : " + name);
-		return projectRepo.findOneByProjectName(name);
+		return projectService.findByName(name);
 	}
 	
 	@RequestMapping(value="/projects")
 	public List<Project> listProjects() {
-		return Utils.toList(projectRepo.findAll());
+		return Utils.toList(projectService.listProjects());
 	}
 }

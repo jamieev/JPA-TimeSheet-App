@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import time.Utils;
-import time.constants.TimeSheetStatus;
 import time.exceptions.IncorrectTimeSheetStatusException;
 import time.exceptions.TimeSheetIncompleteException;
 import time.exceptions.TimeSheetNotFoundException;
 import time.model.TimeSheet;
-import time.repo.TimeSheetRepository;
+import time.service.TimeSheetService;
 
 @RestController
 public class TimeSheetController {
@@ -26,43 +25,34 @@ public class TimeSheetController {
 	private static final Logger log = LoggerFactory.getLogger(TimeSheetController.class);
 	
 	@Resource
-	TimeSheetRepository timeSheetRepo;
+	TimeSheetService timeSheetService;
 	
 	@RequestMapping(value="/timesheets", method=RequestMethod.POST)
 	public TimeSheet createTimeSheet(@RequestBody TimeSheet timeSheet) {
 		log.info("Creating TimeSheet: " + timeSheet);
-		return timeSheetRepo.save(timeSheet);
+		return timeSheetService.createTimeSheet(timeSheet);
 	}
 	
 	@RequestMapping(value="/timesheets/{id}", method=RequestMethod.GET)
 	public TimeSheet getTimeSheet(@PathVariable(name="id") Long id) {
 		log.info("getting TimeSheet id : " + id);
-		return timeSheetRepo.findOne(id);
+		return timeSheetService.getTimeSheet(id);
 	}
 	
 	@RequestMapping(value="/timesheets")
 	public List<TimeSheet> listTimeSheets() {
-		return Utils.toList(timeSheetRepo.findAll());
+		return Utils.toList(timeSheetService.listTimeSheets());
 	}
 	
 	@RequestMapping(value="/timesheets/{id}/submit")
 	public void submitTimeSheet(@PathVariable(name="id") Long id) 
 			throws TimeSheetNotFoundException, IncorrectTimeSheetStatusException, TimeSheetIncompleteException {
-		TimeSheet ts = timeSheetRepo.findOne(id);
-		if(ts == null) throw new TimeSheetNotFoundException();
-		if(ts.getStatus() != TimeSheetStatus.NEW) throw new IncorrectTimeSheetStatusException();
-		if(!ts.isComplete()) throw new TimeSheetIncompleteException();
-		ts.submit();
-		timeSheetRepo.save(ts);
+		timeSheetService.submitTimeSheet(id);
 	}
 
 	@RequestMapping(value="/timesheets/{id}/approve")
 	public void approveTimeSheet(@PathVariable(name="id") Long id) 
 			throws TimeSheetNotFoundException, IncorrectTimeSheetStatusException {
-		TimeSheet ts = timeSheetRepo.findOne(id);
-		if(ts == null) throw new TimeSheetNotFoundException();
-		if(ts.getStatus() != TimeSheetStatus.AWAITING_APPROVAL) throw new IncorrectTimeSheetStatusException();
-		ts.approve();
-		timeSheetRepo.save(ts);
+		timeSheetService.approveTimeSheet(id);
 	}
 }

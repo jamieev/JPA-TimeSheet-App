@@ -1,11 +1,14 @@
 package time.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import time.Utils;
 import time.exceptions.CustomerNotFoundException;
 import time.exceptions.ProjectNotFoundException;
 import time.model.Employee;
@@ -22,7 +25,7 @@ public class ProjectService {
 	@Resource
 	EmployeeRepository employeeRepo;
 	@Resource
-	ProjectRepository projRepo;
+	ProjectRepository projectRepo;
 
 	public void addEmployeeToProject(Long employeeId, Long projectId) 
 			throws CustomerNotFoundException, ProjectNotFoundException{
@@ -31,10 +34,28 @@ public class ProjectService {
 		//NB this should be in a business service
 		Employee e = employeeRepo.findOne(employeeId);
 		if(e == null) throw new CustomerNotFoundException();
-		Project p = projRepo.findOne(projectId);
+		Project p = projectRepo.findOne(projectId);
 		if(p == null) throw new ProjectNotFoundException();
 		e.addProject(p);
 		employeeRepo.save(e);
 	}
 
+	public Project createProject(Project project) {
+		log.info("Creating Project: " + project);
+		return projectRepo.save(project);
+	}
+	
+	public Project getProject(Long id) {
+		log.info("getting Project id : " + id);
+		return projectRepo.findOne(id);
+	}
+	
+	public Project findByName(String name) {
+		log.info("getting Project by name : " + name);
+		return projectRepo.findOneByProjectName(name);
+	}
+	
+	public List<Project> listProjects() {
+		return Utils.toList(projectRepo.findAll());
+	}
 }

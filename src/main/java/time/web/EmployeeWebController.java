@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import time.Utils;
 import time.model.Employee;
-import time.repo.EmployeeRepository;
+import time.service.EmployeeService;
 
 @Controller
 public class EmployeeWebController {
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeWebController.class);
 	@Resource
-	EmployeeRepository employeeRepo;
+	EmployeeService employeeService;
 	
     @RequestMapping("/listEmployees")
     public String listEmployees( Model model) {
-        model.addAttribute("employees", Utils.toList(employeeRepo.findAll()));
+        model.addAttribute("employees", Utils.toList(employeeService.listEmployees()));
         return "listEmployees";
     }
 
@@ -38,13 +38,13 @@ public class EmployeeWebController {
     @PostMapping(value="/createEmployee")
     public String addEmployeeSubmit(@ModelAttribute Employee employee) {
     	log.info("Saving employee: " + employee);
-    	employeeRepo.save(employee);
+    	employeeService.createEmployee(employee);
         return "forward:/listEmployees";
     }
     
     @DeleteMapping(value="/deleteEmployee")
     public String deleteEmployee(Long id) {
-    	employeeRepo.delete(id);
+    	employeeService.deleteEmployee(id);
         return "forward:/listEmployees";
     }
 }

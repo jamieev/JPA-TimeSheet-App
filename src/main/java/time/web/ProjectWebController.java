@@ -14,7 +14,6 @@ import time.exceptions.CustomerNotFoundException;
 import time.exceptions.ProjectNotFoundException;
 import time.model.Project;
 import time.repo.EmployeeRepository;
-import time.repo.ProjectRepository;
 import time.service.ProjectService;
 
 @Controller
@@ -24,14 +23,11 @@ public class ProjectWebController {
 	ProjectService projectService;
 	
 	@Resource
-	ProjectRepository projectRepo;
-	
-	@Resource
 	EmployeeRepository employeeRepo;
 	
     @RequestMapping("/listProjects")
     public String listProjects( Model model) {
-        model.addAttribute("projects", Utils.toList(projectRepo.findAll()));
+        model.addAttribute("projects", Utils.toList(projectService.listProjects()));
         return "listProjects";
     }
 
@@ -43,7 +39,7 @@ public class ProjectWebController {
 
     @GetMapping(value="/viewProject")
     public String viewProject(Model model, Long id) {
-    	model.addAttribute("project",projectRepo.findOne(id));
+    	model.addAttribute("project",projectService.getProject(id));
     	model.addAttribute("employees", employeeRepo.findByProjectId(id));
     	model.addAttribute("allEmployees", employeeRepo.findAll());
         return "viewProject";
@@ -51,7 +47,7 @@ public class ProjectWebController {
 
     @PostMapping(value="/createProject")
     public String addProjectSubmit(@ModelAttribute Project project) {
-    	projectRepo.save(project);
+    	projectService.createProject(project);
         return "forward:/listProjects";
     }
     
