@@ -2,45 +2,17 @@ package time.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import time.Utils;
 import time.model.Employee;
-import time.repo.EmployeeRepository;
 
-@Service
-public class EmployeeService {
-	
-	private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
-	
-	@Resource
-	EmployeeRepository employeeRepo;
+public interface EmployeeService {
 
-    public List<Employee> listEmployees() {
-    	log.info("Listing employees ");
-        return Utils.toList(employeeRepo.findAll());
-    }
+    public List<Employee> listEmployees();
 
-    public Employee createEmployee(Employee employee) {
-    	log.info("Saving employee: " + employee);
-    	return employeeRepo.save(employee);
-    }
+    public Employee createEmployee(Employee employee);
 
-    public void deleteEmployee(Long id) {
-    	log.info("Deleting employee: " + id);
-    	employeeRepo.delete(id);
-    }
+    public void deleteEmployee(Long id);
 
-    public Employee getEmployee(Long id) {
-    	return employeeRepo.findOne(id);
-    }
+    public Employee getEmployee(Long id);
     
-	public List<Employee> findByProject(Long projectId) {
-		return Utils.toList(employeeRepo.findByProjectId(projectId));
-	}
-
+	public List<Employee> findByProject(Long projectId);
 }
