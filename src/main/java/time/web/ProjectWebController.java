@@ -10,14 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import time.Utils;
+import time.exceptions.CustomerNotFoundException;
+import time.exceptions.ProjectNotFoundException;
 import time.model.Project;
+import time.repo.EmployeeRepository;
 import time.repo.ProjectRepository;
+import time.service.ProjectService;
 
 @Controller
 public class ProjectWebController {
 
 	@Resource
+	ProjectService projectService;
+	
+	@Resource
 	ProjectRepository projectRepo;
+	
+	@Resource
+	EmployeeRepository employeeRepo;
 	
     @RequestMapping("/listProjects")
     public String listProjects( Model model) {
@@ -31,9 +41,25 @@ public class ProjectWebController {
         return "createProject";
     }
 
+    @GetMapping(value="/viewProject")
+    public String viewProject(Model model, Long id) {
+    	model.addAttribute("project",projectRepo.findOne(id));
+    	model.addAttribute("employees", employeeRepo.findByProjectId(id));
+    	model.addAttribute("allEmployees", employeeRepo.findAll());
+        return "viewProject";
+    }
+
     @PostMapping(value="/createProject")
     public String addProjectSubmit(@ModelAttribute Project project) {
     	projectRepo.save(project);
         return "forward:/listProjects";
+    }
+    
+    @PostMapping(value="/addEmployee")
+    public String addEmployee(Model model, Long projectId, Long employeeId) throws CustomerNotFoundException, ProjectNotFoundException {
+    	//TODO add check for existing employees.
+    	projectService.addEmployeeToProject(employeeId, projectId);
+    	model.addAttribute(projectId);
+        return "redirect:/viewProject?id="+projectId;
     }
 }

@@ -17,10 +17,9 @@ import time.exceptions.CustomerNotFoundException;
 import time.exceptions.ProjectNotFoundException;
 import time.model.DailyEntry;
 import time.model.Employee;
-import time.model.Project;
 import time.repo.DailyEntryRepository;
 import time.repo.EmployeeRepository;
-import time.repo.ProjectRepository;
+import time.service.ProjectService;
 
 @RestController
 public class EmployeeController {
@@ -28,11 +27,11 @@ public class EmployeeController {
 	private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Resource
-	EmployeeRepository employeeRepo;
+	ProjectService projectService;
 	
 	@Resource
-	ProjectRepository projRepo;
-	
+	EmployeeRepository employeeRepo;
+		
 	@Resource
 	DailyEntryRepository entryRepo;
 	
@@ -67,15 +66,7 @@ public class EmployeeController {
 	@RequestMapping(value="/employees/{id}/addToProject/{projectId}", method=RequestMethod.PUT)
 	public void addToProject(@PathVariable(name="id")Long id, @PathVariable(name="projectId") Long projectId) 
 	throws CustomerNotFoundException, ProjectNotFoundException{
-		log.info("adding employee " +  id + " to project " + projectId);
-		
-		//NB this should be in a business service
-		Employee e = employeeRepo.findOne(id);
-		if(e == null) throw new CustomerNotFoundException();
-		Project p = projRepo.findOne(projectId);
-		if(p == null) throw new ProjectNotFoundException();
-		e.addProject(p);
-		employeeRepo.save(e);
+		projectService.addEmployeeToProject(id, projectId);
 	}
 	
 	@RequestMapping(value="employees/dailyEntries", method=RequestMethod.POST)

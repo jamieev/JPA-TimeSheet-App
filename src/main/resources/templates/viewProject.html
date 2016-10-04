@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<H1 th:text="${project.projectName}">...</H1>
+<h2>Tasks</h2>
+<ul>
+  <li th:each="task : ${project.tasks}">
+   <p th:text="${task.taskName}">...</p>
+  </li>
+</ul>
+<div th:unless="${#lists.isEmpty(employees)}">
+<h2>Employees</h2>
+<ul>
+  <li th:each="emp : ${employees}">
+   <p th:text="${emp.fullName}">...</p>
+  </li>
+</ul>
+</div>
+<h2>Add Employee</h2>
+	<h1>Form</h1>
+    <form action="#" th:action="@{/addEmployee}"  method="post">
+	    <select name="employeeId">
+		  <option th:each="emp : ${allEmployees}" th:value="${emp.id}" th:text="${emp.fullName}"></option>
+		</select>
+		<input type="hidden" name="projectId" th:value="${project.id}"/>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        
+    </form>
+</body>
+</html>
