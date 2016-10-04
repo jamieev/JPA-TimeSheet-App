@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -63,4 +64,18 @@ public class TimeSheetTest {
 		assertTrue(ts.isComplete());
 	}
 
+	@Test
+	public void testIsNotComplete() {
+		List<DailyEntry> incompleteEntries = new ArrayList<DailyEntry>(1);
+		DailyEntry e = new DailyEntry(cal.getTime(), project, task, employee, 1);
+		incompleteEntries.add(e);
+		
+		Date start = cal.getTime();
+		cal.add(Calendar.DAY_OF_WEEK,1);
+		Date end = cal.getTime();
+		
+		TimeSheet incomplete =  new TimeSheet(employee, start, end);
+		incomplete.setEntries(incompleteEntries);
+		assertFalse(incomplete.isComplete());
+	}
 }
